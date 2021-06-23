@@ -90,7 +90,7 @@ const images = document.querySelectorAll('.gallery__image');
 
 
 
-function catchClickedEl(evt) {
+function openModalOnClickedEl(evt) {
   evt.preventDefault();
   
   let index = Number(evt.target.dataset.index);
@@ -116,31 +116,27 @@ function catchClickedEl(evt) {
               index -= 1;
               modalImage.src = images[index].dataset.source;
             };
-      });
+    });
+  
+  overlay.addEventListener('click', closeModal);
+  closeButton.addEventListener('click', closeModal);
+  window.addEventListener("keydown", closeModal);
 };
 
 
 function closeModal(evt) {
-  modalImage.src = "";
-  modalDiv.classList.remove("is-open");
+  if (evt.type === "click" || evt.code === "Escape") {
+    modalImage.src = "";
+    modalDiv.classList.remove("is-open");
+  };
 };
 
-function closeModalWithOverlay(evt) {
-  modalImage.src = "";
-  modalDiv.classList.remove("is-open");
-};
 
-function closeModalWithEsc(evt) {
-    if (evt.code === 'Escape') {
-        modalImage.src = "";
-        modalDiv.classList.remove("is-open");
-      }
-};
+galleryEl.addEventListener('click', openModalOnClickedEl);
 
-galleryEl.addEventListener('click', catchClickedEl);
-closeButton.addEventListener('click', closeModal);
-overlay.addEventListener('click', closeModalWithOverlay);
-window.addEventListener("keydown", closeModalWithEsc);
+
+
+
 
 
 
